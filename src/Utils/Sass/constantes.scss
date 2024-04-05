@@ -1,0 +1,16 @@
+
+$Grey: #565656;
+$GreyT: #56565680;
+
+
+@font-face { font-family: SpotBold; src: url(../Fonts/Spotify-Font/Gotham-Bold.otf);}
+@font-face { font-family: Spot; src: url(../Fonts/Spotify-Font/Gotham-BookItalic.otf);}
+@font-face { font-family: SpotLight; src: url(../Fonts/Spotify-Font/Gotham-ThinItalic.otf);}
+
+a { text-decoration: none;}
+
+@mixin centerRow { display: flex; flex-direction: row; justify-content: center; align-items: center;}
+@mixin centerCol { display: flex; flex-direction: column; justify-content: center; align-items: center;}
+
+
+// @media screen and (max-width: 450px) {}

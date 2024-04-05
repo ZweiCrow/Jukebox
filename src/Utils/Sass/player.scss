@@ -1,0 +1,44 @@
+@import "./constantes.scss";
+
+.filter       { width: 100%; height: 100%; background: black; opacity: .2; position: absolute; z-index: 15;}
+.turningDisc  { animation: turning 25s linear infinite; animation-play-state: paused;}
+
+@keyframes turning {
+  to  { transform: rotate(360deg); }
+}
+
+#Player { width: 100%; height: 100vh; background: pink;
+          #Jacket { height: 100%; aspect-ratio: 1/1; z-index: 50; position: fixed; top: 0; left: 0;
+                    #Naming { width: 80%; height: 50px; position: absolute; z-index: 100; top: -25%; left: 0; right: 0; bottom: 0; margin: auto;
+                              h2  { font-size: 70px; color: var(--light); font-family: SpotBold; filter: drop-shadow(0 0 6px var(--dark));}
+                              p   { font-size: 50px; color: var(--light); font-family: Spot; filter: drop-shadow(0 0 6px var(--dark)); margin-top: 15px;}
+                            }
+                    #Links  { width: 40%; height: 200px; position: absolute; z-index: 100; right: 25px; bottom: 25px; display: flex; align-items: center; justify-content: space-around;
+                              a { width: 100px; height: 80%; @include centerCol; justify-content: flex-start;
+                                  svg { width: 90%; height: 35%; margin-top: 30px; filter: drop-shadow(0 0 6px var(--dark));
+                                        path  { fill: var(--light);}
+                                        #about{ fill: none; stroke: var(--light);}
+                                      }
+                                  p   { width: 90%; font-size: 16px; color: var(--light); font-family: SpotLight; text-align: center; margin-top: 10px; filter: drop-shadow(0 0 6px var(--dark));}
+                                  &:hover {
+                                            svg { filter: drop-shadow(0 0 6px var(--light));}
+                                            p   { filter: drop-shadow(0 0 6px var(--light));}
+                                          }
+                                }
+                            }
+                    #Pic    { width: 100%; height: 100%; position: absolute; z-index: 20; filter: drop-shadow(10px 0px 15px black);}
+                    #disc   { width: 150%; height: 150%; position: absolute; z-index: 5; right: -25%; top: -25%; @include centerRow; position: relative;animation: turning 25s linear infinite; animation-play-state: paused;
+                              #vinyl { width: 130%; height: 130%; z-index: 5; position: absolute;}
+                              #Dcenter { width: 57%; height: 56%; border-radius: 50%; z-index: 10; margin-top: -1%; box-shadow: 0 0 8px 8px whitesmoke;}
+                            }
+                    #play { height: 14vh; aspect-ratio: 1/1; background: white; position: absolute; right: -8vh; top: calc(50% - 8vh); z-index: 100; border-radius: 50%; border: 10px solid rgb(188, 188, 188); @include centerRow;
+                            svg { width: 40%; height: auto; margin-left: 5px;}
+                            &:hover { filter: drop-shadow(0 0 4px white); border: 10px solid white; cursor: pointer;
+                                      svg { fill: var(--custom-color);}
+                                    }
+                          }
+                    #card { height: 20vh; min-width: 500px; width: fit-content; max-width: 650px; background: var(--light); position: absolute; z-index: 10; top: calc(50% - 10vh); left: 90%; border-radius: 15px; filter: drop-shadow(4px 4px 4px black);
+
+                          }
+                  }
+        }
