@@ -12,18 +12,18 @@ const Player = () => {
   const pauseIcon = useRef()
 
   const Album = [
-    {nom: "Circle With Me", path: "./Albums/Eternal Blue/Circle With Me.mp3"},
-    {nom: "Constance", path: "./Albums/Eternal Blue/Constance.mp3"},
-    {nom: "Eternal Blue", path: "./Albums/Eternal Blue/Eternal Blue.mp3"},
-    {nom: "Halcyon", path: "./Albums/Eternal Blue/Halcyon.mp3"},
-    {nom: "Holy Roller", path: "./Albums/Eternal Blue/Holy Roller.mp3"},
+    {nom: "Sun Killer", path: "./Albums/Eternal Blue/Sun Killer.mp3"},
     {nom: "Hurt You", path: "./Albums/Eternal Blue/Hurt You.mp3"},
+    {nom: "Yellowjacket", path: "./Albums/Eternal Blue/Yellowjacket (feat. Sam Carter).mp3", ft: "Ft. Sam Carter"},
+    {nom: "The Summit", path: "./Albums/Eternal Blue/The Summit.mp3"},
     {nom: "Secret Garden", path: "./Albums/Eternal Blue/Secret Garden.mp3"},
     {nom: "Silk In The Strings", path: "./Albums/Eternal Blue/Silk In The Strings.mp3"},
-    {nom: "Sun Killer", path: "./Albums/Eternal Blue/Sun Killer.mp3"},
-    {nom: "The Summit", path: "./Albums/Eternal Blue/The Summit.mp3"},
+    {nom: "Holy Roller", path: "./Albums/Eternal Blue/Holy Roller.mp3"},
+    {nom: "Eternal Blue", path: "./Albums/Eternal Blue/Eternal Blue.mp3"},
     {nom: "We Live In A Strange Wolrd", path: "./Albums/Eternal Blue/We Live In A Strange Wolrd.mp3"},
-    {nom: "Yellowjacket", path: "./Albums/Eternal Blue/Yellowjacket (feat. Sam Carter).mp3", ft: "Ft. Sam Carter"},
+    {nom: "Halcyon", path: "./Albums/Eternal Blue/Halcyon.mp3"},
+    {nom: "Circle With Me", path: "./Albums/Eternal Blue/Circle With Me.mp3"},
+    {nom: "Constance", path: "./Albums/Eternal Blue/Constance.mp3"},
   ]
 
   // Function to turn or stop the disc
@@ -61,7 +61,7 @@ const Player = () => {
     const seconds = Math.floor(x%60)
     const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`
     const time = `${minutes}:${returnedSeconds}`
-    console.log(time);
+    setDuration(time)
   }
   
   setTimeout(()=>{
@@ -69,14 +69,13 @@ const Player = () => {
       TurningDisc()
       // alert("Fini !")
     }
-    console.log(audio.current.duration);
+    // console.log(audio.current.duration);
   },2500)
 
   useEffect(()=>{
-    // const songTime = Math.floor(audio.current.duration)
-    // CalculateSongTime(audio.current.duration)
-    // setDuration(songTime)
-
+    setTimeout(()=>{
+      CalculateSongTime(audio.current.duration)
+    },3000)
   },[])
 
 
