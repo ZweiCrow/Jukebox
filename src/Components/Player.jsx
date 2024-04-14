@@ -3,13 +3,19 @@ import "../Utils/Sass/player.scss"
 import { Link } from 'react-router-dom';
 
 const Player = () => {
+  // States
   const [isTurning, setIsTurning] = useState(false) 
-  const [Actual, setActual] = useState(0) 
-  const [Duration, setDuration] = useState(0) 
+  const [song, setSong] = useState(0) 
+  const [duration, setDuration] = useState(0) 
+  const [currentTime, setCurrentTime] = useState(0) 
+
+  // References
   const disc = useRef()
   const audio = useRef()
   const playIcon = useRef()
   const pauseIcon = useRef()
+  const progressBar = useRef()
+  const animationRef = useRef() // animation de la barre de progres
 
   const Album = [
     {nom: "Sun Killer", path: "./Albums/Eternal Blue/Sun Killer.mp3"},
@@ -47,43 +53,55 @@ const Player = () => {
       audio.current.play()
       playIcon.current.classList.toggle("hide")
       pauseIcon.current.classList.toggle("hide")
+      animationRef.current = requestAnimationFrame(WhilePlaying)
     }
     if(!x){
       console.log("stop!");
       audio.current.pause()
       playIcon.current.classList.toggle("hide")
       pauseIcon.current.classList.toggle("hide")
+      cancelAnimationFrame(animationRef.current)
     }
   }
 
-  const CalculateSongTime = (x) => {
-    const minutes = Math.floor(x/60)
-    const seconds = Math.floor(x%60)
-    const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`
-    const time = `${minutes}:${returnedSeconds}`
-    setDuration(time)
+  // Update and synchronise play time 
+  const WhilePlaying = ()=>{
+    progressBar.current.value = audio.current.currentTime
+    setCurrentTime(progressBar.current.value)
+    animationRef.current = requestAnimationFrame(WhilePlaying)
   }
-  
-  setTimeout(()=>{
+  const ChangeRange = () => {
+    audio.current.currentTime = progressBar.current.value
+    setCurrentTime(progressBar.current.value)
+  }
+
+  // Function to display time
+  const CalculateTime = (x) => {
+      const minutes = Math.floor(x/60)
+      const seconds = Math.floor(x%60)
+      const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`
+      const time = `${minutes}:${returnedSeconds}`
+      return time;
+  }
+
+  // What to do when a song end
+  if (audio?.current) {
     audio.current.onended = ()=>{
       TurningDisc()
-      // alert("Fini !")
     }
-    // console.log(audio.current.duration);
-  },2500)
-
-  useEffect(()=>{
-    setTimeout(()=>{
-      CalculateSongTime(audio.current.duration)
-    },3000)
-  },[])
-
+  }
+  
+  const onLoadedMetaData = ()=>{
+    const seconds = Math.floor(audio.current.duration)
+    setDuration(audio.current.duration)
+    progressBar.current.max = seconds
+  }
 
   return (
     <div id="Player">
       <div id="Jacket">
         <div id="Naming">
-          <audio ref={audio} src={Album[Actual].path}></audio>
+          <audio onLoadedMetadata={onLoadedMetaData} ref={audio} src={Album[song].path} preload="metadata"></audio>
           <h2>Eternal Blue</h2>
           <p>Spiritbox</p>
         </div>
@@ -178,15 +196,15 @@ const Player = () => {
         </div>
         <div id="card">
           <div id="song">
-            <p>{Album[Actual].nom}</p>
+            <p>{Album[song].nom}</p>
           </div>
           <div id="ft">
-            <p>{Album[Actual].ft}</p>
+            <p>{Album[song].ft}</p>
           </div>
           <div id="progressbar">
-            <p>0:00</p>
-            <input type="range" />
-            <p>{Duration}</p>
+            <p>{CalculateTime(currentTime)}</p>
+            <input ref={progressBar} onChange={ChangeRange} type="range" defaultValue={0}/>
+            <p>{(duration && !isNaN(duration)) && CalculateTime(duration)}</p>
           </div>
         </div>
       </div>
