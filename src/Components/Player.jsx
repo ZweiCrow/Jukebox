@@ -26,23 +26,40 @@ const Player = () => {
     {nom: "Silk In The Strings", path: "./Albums/Eternal Blue/Silk In The Strings.mp3"},
     {nom: "Holy Roller", path: "./Albums/Eternal Blue/Holy Roller.mp3"},
     {nom: "Eternal Blue", path: "./Albums/Eternal Blue/Eternal Blue.mp3"},
-    {nom: "We Live In A Strange Wolrd", path: "./Albums/Eternal Blue/We Live In A Strange Wolrd.mp3"},
+    {nom: "We Live In A Strange Wolrd", path: "./Albums/Eternal Blue/We Live In A Strange World.mp3"},
     {nom: "Halcyon", path: "./Albums/Eternal Blue/Halcyon.mp3"},
     {nom: "Circle With Me", path: "./Albums/Eternal Blue/Circle With Me.mp3"},
     {nom: "Constance", path: "./Albums/Eternal Blue/Constance.mp3"},
   ]
+  const AlbumData = {
+    name: "Eternal Blue",
+    artist: "Spiritbox",
+    jacket: "./Jackets/eternalBlue.jpg",
+    disc: "./Discs/eternalBlue.jpg",
+    spotify: "https://open.spotify.com/intl-fr/artist/4MzJMcHQBl9SIYSjwWn8QW",
+  }
 
   // Functions to change the song
   const GoToPrevious = ()=> {
     if (song > 0) {
+      PlayPause(false)
       setSong(song-1)
+      setTimeout(()=>{
+        PlayPause(true)
+      },100)
     }
   }
   const GoToNext = ()=> {
     if (song < Album.length-1){
+      PlayPause(false)
       setSong(song+1)
+      setTimeout(()=>{
+        PlayPause(true)
+      },100)
     } else if (song === Album.length-1) {
       setSong(0)
+      disc.current.style.animationPlayState = 'paused';
+      setIsTurning(!isTurning)
     }
   }
 
@@ -63,14 +80,14 @@ const Player = () => {
   // Function to play or pause the song
   const PlayPause = (x) => {
     if(x){
-      console.log("play!");
+      // console.log("play!");
       audio.current.play()
       playIcon.current.classList.toggle("hide")
       pauseIcon.current.classList.toggle("hide")
       animationRef.current = requestAnimationFrame(WhilePlaying)
     }
     if(!x){
-      console.log("stop!");
+      // console.log("stop!");
       audio.current.pause()
       playIcon.current.classList.toggle("hide")
       pauseIcon.current.classList.toggle("hide")
@@ -111,26 +128,17 @@ const Player = () => {
     progressBar.current.max = seconds
   }
 
+
   return (
     <div id="Player">
       <div id="Jacket">
         <div id="Naming">
-          <audio
-            onLoadedMetadata={onLoadedMetaData}
-            ref={audio}
-            src={Album[song].path}
-            preload="metadata"
-          ></audio>
-          <h2>Eternal Blue</h2>
-          <p>Spiritbox</p>
+          <audio onLoadedMetadata={onLoadedMetaData} ref={audio} src={Album[song].path} preload="metadata" ></audio>
+          <h2>{AlbumData.name}</h2>
+          <p>{AlbumData.artist}</p>
         </div>
         <div id="Links">
-          <Link
-            to={
-              "https://open.spotify.com/intl-fr/artist/4MzJMcHQBl9SIYSjwWn8QW"
-            }
-            target="_blank"
-          >
+          <Link to={AlbumData.spotify} target="_blank" >
             <svg
               width="30"
               height="30"
@@ -180,10 +188,10 @@ const Player = () => {
           </Link>
         </div>
         <div className="filter"></div>
-        <img id="Pic" src="./Jackets/eternalBlue.jpg" alt="Jacket" />
+        <img id="Pic" src={AlbumData.jacket} alt="Jacket" />
         <div id="disc" ref={disc}>
           <img id="vinyl" src="./Photos/Disc.png" alt="" />
-          <img id="Dcenter" src="./Discs/eternalBlue.jpg" alt="" />
+          <img id="Dcenter" src={AlbumData.disc} alt="" />
         </div>
         <div id="play" onClick={TurningDisc}>
           <svg
