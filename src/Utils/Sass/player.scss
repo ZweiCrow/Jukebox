@@ -49,9 +49,16 @@
                             #ft   { width: fit-content; height: fit-content; margin-left: 20%; margin-top: 10px;
                                     p { font-family: Spot; font-size: 20px; color: var(--dark);}
                                   }
-                            #progressbar  { width: fit-content; height: 25px; position: absolute; right: calc(50% - 250px); bottom: 10px; @include centerRow;
+                            #progressbar  { width: fit-content; height: 25px; position: absolute; right: calc(50% - 250px); bottom: 15px; @include centerRow;
                                             p     { font-family: Spot; font-size: 18px; color: black; margin: 0 15px;}
-                                            input { width: 290px;}
+                                            input { width: 290px; -webkit-appearance: none; appearance: none;
+                                                    &:focus { outline: none; }
+                                                    &::-webkit-slider-runnable-track { opacity: .5; width: 100%; height: 1px; cursor: pointer; box-shadow: none; background: var(--custom-color); border-radius: 0px; border: 0px solid #ff0000;}
+                                                    &::-moz-range-track { width: 100%; height: 1px; cursor: pointer; box-shadow: none; background: #ffffff; border-radius: 0px; border: 0px solid #010101;}
+                                                    &::-webkit-slider-thumb { box-shadow: none; border: 0px solid #3cff00; box-shadow: 0px 10px 10px rgba(0,0,0,0.25); height: 35px; width: 16px; border-radius: 22px; background: var(--custom-color); cursor: pointer; -webkit-appearance: none; margin-top: -16px; }
+                                                    &::-moz-range-thumb{ box-shadow: none; border: 0px solid #afff03; box-shadow: 0px 10px 10px rgba(0,0,0,0.25); height: 35px; width: 16px; border-radius: 22px; background: rgb(255, 0, 179); cursor: pointer; -webkit-appearance: none; margin-top: -16px; }
+                                                    &::-moz-focus-outer { border: 0; }
+                                                  }
                                           }
                           }
                   }
