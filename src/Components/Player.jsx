@@ -7,11 +7,12 @@ import { URL } from '../Urls';
 const Player = () => {
   // States
   const [isTurning, setIsTurning] = useState(false) 
+  const [isPlaying,setIsPlaying] = useState(false)
+  const [isLoaded,setIsLoaded] = useState(false)
   const [song, setSong] = useState(0) 
   const [duration, setDuration] = useState(0) 
   const [currentTime, setCurrentTime] = useState(0) 
   const [AlbumData, setAlbumData] = useState({}) 
-  const [isLoaded,setIsLoaded] = useState(false)
 
   // References
   const disc = useRef()
@@ -22,104 +23,116 @@ const Player = () => {
   const progressBar = useRef()
   const animationRef = useRef() // animation de la barre de progres
 
+  // const AlbumDataaa = {
+  //   "name": "EternalBlue",
+  //   "artist": "Spiritbox",
+  //   "jacketPath": "./Jackets/eternalBlue.jpg",
+  //   "discPath": "./Discs/eternalBlue.jpg",
+  //   "spotifyLink": "link",
+  //   "tracklist": [
+  //     {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+  //     {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+  //     {"nom": "song", "path": "./Albums/Eternalblue/song.mp3", ft: "Ft. Sam Carter"},
+  //     {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+  //     {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+  //     {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+  //     {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+  //     {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+  //     {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+  //     {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+  //     {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+  //     {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+  //   ]
+  // }
+
+
   const [queryParameters] = useSearchParams()
   const AlbumName = queryParameters.get("name")
 
-  const AlbumDataaa = {
-    "name": "EternalBlue",
-    "artist": "Spiritbox",
-    "jacketPath": "./Jackets/eternalBlue.jpg",
-    "discPath": "./Discs/eternalBlue.jpg",
-    "spotifyLink": "link",
-    "tracklist": [
-      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
-      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
-      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3", ft: "Ft. Sam Carter"},
-      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
-      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
-      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
-      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
-      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
-      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
-      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
-      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
-      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
-    ]
-  }
-  const AlbumDataaaa = {
-    "name": "Holy Hell",
-    "artist": "Architects",
-    "jacketPath": "./Jackets/HolyHell.jpg",
-    "discPath": "./Discs/HolyHell.jpg",
-    "spotifyLink": "https://open.spotify.com/intl-fr/artist/3ZztVuWxHzNpl0THurTFCv",
-    "tracklist": [
-      {"nom": "Death Is Not Defeat", "path": "./Albums/Holy Hell/Death Is Not Defeat.mp3"},
-      {"nom": "Hereafter", "path": "./Albums/Holy Hell/Hereafter.mp3"},
-      {"nom": "Mortal After All", "path": "./Albums/Holy Hell/Mortal After All.mp3"},
-      {"nom": "Holy Hell", "path": "./Albums/Holy Hell/Holy Hell.mp3"},
-      {"nom": "Damnation", "path": "./Albums/Holy Hell/Damnation.mp3"},
-      {"nom": "Royal Beggars", "path": "./Albums/Holy Hell/Royal Beggars.mp3"},
-      {"nom": "Modern Misery", "path": "./Albums/Holy Hell/Modern Misery.mp3"},
-      {"nom": "Dying To Heal", "path": "./Albums/Holy Hell/Dying To Heal.mp3"},
-      {"nom": "The Seventh Circle", "path": "./Albums/Holy Hell/The Seventh Circle.mp3"},
-      {"nom": "Doomsday", "path": "./Albums/Holy Hell/Doomsday.mp3"},
-      {"nom": "A Wasted Hymn", "path": "./Albums/Holy Hell/A Wasted Hymn.mp3"}
-    ]
-  }
-
-  // Functions to change the song
-  const GoToPrevious = ()=> {
-    if (song > 0) {
-      PlayPause(false)
-      setSong(song-1)
-      setTimeout(()=>{
-        PlayPause(true)
-      },100)
+  // Fonction to play or pause the audio
+  const PlayOrPause = ()=>{
+    if (!isPlaying) {
+      audio.current.play()
+      animationRef.current = requestAnimationFrame(WhilePlaying)
+      setIsPlaying(!isPlaying)
+      TurnTheDisc()
+      SwapTheButton()
+    }
+    if (isPlaying) {
+      audio.current.pause()
+      cancelAnimationFrame(animationRef.current)
+      setIsPlaying(!isPlaying)
+      TurnTheDisc()
+      SwapTheButton()
     }
   }
-  const GoToNext = ()=> {
+
+  // Fonction to turn or stop the disc
+  const TurnTheDisc = ()=>{
+    if (!isTurning) {
+      disc.current.style.animationPlayState = 'running';
+      setIsTurning(!isTurning)
+    }
+    if (isTurning) {
+      disc.current.style.animationPlayState = 'paused';
+      setIsTurning(!isTurning)
+    }
+  }
+
+  // Function to switch the state of the play button
+  const SwapTheButton = ()=>{
+    if (isPlaying) {
+      playIcon.current.classList.toggle("hide")
+      pauseIcon.current.classList.toggle("hide")
+    }
+    if (!isPlaying) {
+      playIcon.current.classList.toggle("hide")
+      pauseIcon.current.classList.toggle("hide")
+    }
+  }
+
+  // Function to start the audio, disc and play button
+  const StartEverything = ()=>{
+    audio.current.play()
+    playIcon.current.classList.add("hide")
+    pauseIcon.current.classList.remove("hide")
+    animationRef.current = requestAnimationFrame(WhilePlaying)
+    disc.current.style.animationPlayState = 'running';
+    setIsTurning(true)
+    setIsPlaying(true)
+  }
+
+  // Function to stop the audio, disc and play button
+  const StopEverything = ()=>{
+    audio.current.pause()
+    playIcon.current.classList.remove("hide")
+    pauseIcon.current.classList.add("hide")
+    cancelAnimationFrame(animationRef.current)
+    disc.current.style.animationPlayState = 'paused';
+    setIsTurning(false)
+    setIsPlaying(false)
+  }
+  // Function to pass to the next song
+  const NextSong = ()=>{
     if (song < AlbumData.tracklist.length-1){
-      PlayPause(false)
+      StopEverything()
       setSong(song+1)
       setTimeout(()=>{
-        PlayPause(true)
+        StartEverything()      
       },100)
     } else if (song === AlbumData.tracklist.length-1) {
       setSong(0)
-      disc.current.style.animationPlayState = 'paused';
-      setIsTurning(!isTurning)
+      StopEverything()
     }
   }
-
-  // Function to turn or stop the disc
-  const TurningDisc = () => {
-    if(isTurning === false){
-      disc.current.style.animationPlayState = 'running';
-      PlayPause(true)
-      setIsTurning(!isTurning)
-    }
-    if(isTurning === true){
-      disc.current.style.animationPlayState = 'paused';
-      PlayPause(false)
-      setIsTurning(!isTurning)
-    }
-  }
-
-  // Function to play or pause the song
-  const PlayPause = (x) => {
-    if(x){
-      // console.log("play!");
-      audio.current.play()
-      playIcon.current.classList.toggle("hide")
-      pauseIcon.current.classList.toggle("hide")
-      animationRef.current = requestAnimationFrame(WhilePlaying)
-    }
-    if(!x){
-      // console.log("stop!");
-      audio.current.pause()
-      playIcon.current.classList.toggle("hide")
-      pauseIcon.current.classList.toggle("hide")
-      cancelAnimationFrame(animationRef.current)
+  // Function to go back to the previous song
+  const PreviousSong = ()=>{
+    if (song > 0) {
+      StopEverything()
+      setSong(song-1)
+      setTimeout(()=>{
+        StartEverything()      
+      },100)
     }
   }
 
@@ -146,7 +159,7 @@ const Player = () => {
   // What to do when a song end
   if (audio?.current) {
     audio.current.onended = ()=>{
-      TurningDisc()
+      TurnTheDisc()
     }
   }
   
@@ -246,7 +259,7 @@ const Player = () => {
           <img id="vinyl" src="./Photos/Disc.png" alt="" />
           <img id="Dcenter" src={AlbumData.discPath} alt="" />
         </div>
-        <div id="play" onClick={TurningDisc}>
+        <div id="play" onClick={PlayOrPause}>
           <svg
             id="playButton"
             ref={playIcon}
@@ -296,7 +309,7 @@ const Player = () => {
           </div>
         </div>
         <div id="navigation">
-          <div id="prev" onClick={()=>{GoToPrevious()}}>
+          <div id="prev" onClick={()=>{PreviousSong()}}>
             <svg
               width="36"
               height="31"
@@ -310,7 +323,7 @@ const Player = () => {
               />
             </svg>
           </div>
-          <div id="next" onClick={()=>{GoToNext()}}>
+          <div id="next" onClick={()=>{NextSong()}}>
             <svg
               width="36"
               height="30"
