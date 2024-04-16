@@ -159,7 +159,7 @@ const Player = () => {
   // What to do when a song end
   if (audio?.current) {
     audio.current.onended = ()=>{
-      TurnTheDisc()
+      NextSong()
     }
   }
   
