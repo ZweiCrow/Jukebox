@@ -6,6 +6,9 @@ function App() {
   return (
     <Routes>
       <Route path="/" Component={Home}/>
+      <Route path="/Albums" Component={Home}/>
+      <Route path="/Artists" Component={Home}/>
+      <Route path="/SoundTracks" Component={Home}/>
       <Route path="/Play" Component={Player}/>
     </Routes>
   );

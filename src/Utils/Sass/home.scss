@@ -1,0 +1,22 @@
+@import "./constantes.scss";
+
+#Home { width: 100%; height: fit-content; background: #1B1B19; display: flex; flex-direction: column; align-items: center;
+        div { width: 80%; height: 325px; background: #303030; margin-top: 50px; border-radius: 10px;
+              h2  { font-family: SpotBold; font-size: 40px; color: var(--light); margin: 10px 0px 0px 20px;}
+              ul  { width: 95%; height: 75%; margin-left: 20px; margin-top: 30px; display: flex; align-items: center;
+                    a { width: 200px; height: 100%; @include centerCol; justify-content: flex-start; margin: 0 20px;
+                        img { width: 90%; aspect-ratio: 1/1; border-radius: 15px; filter: drop-shadow(0 0 4px #1B1B19);}
+                        p   { font-family: Spot; font-size: 20px; color: var(--light); margin-top: 15px;}
+                        &:hover {
+                                  p { filter: drop-shadow(0 0 4px var(--light));}
+                                }
+                      }
+                    #More { width: 100px; height: 100px; background: #1B1B19; @include centerRow; border-radius: 5000px; margin-bottom: 60px;
+                            p { font-family: SpotBold; font-size: 20px; color: var(--light); margin: 0;}
+                            &:hover {
+                                      p { filter: none;}
+                                    }
+                          }
+                  }
+            }
+}

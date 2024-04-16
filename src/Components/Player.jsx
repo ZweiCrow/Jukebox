@@ -17,27 +17,47 @@ const Player = () => {
   const progressBar = useRef()
   const animationRef = useRef() // animation de la barre de progres
 
-  const Album = [
-    {nom: "Sun Killer", path: "./Albums/Eternal Blue/Sun Killer.mp3"},
-    {nom: "Hurt You", path: "./Albums/Eternal Blue/Hurt You.mp3"},
-    {nom: "Yellowjacket", path: "./Albums/Eternal Blue/Yellowjacket (feat. Sam Carter).mp3", ft: "Ft. Sam Carter"},
-    {nom: "The Summit", path: "./Albums/Eternal Blue/The Summit.mp3"},
-    {nom: "Secret Garden", path: "./Albums/Eternal Blue/Secret Garden.mp3"},
-    {nom: "Silk In The Strings", path: "./Albums/Eternal Blue/Silk In The Strings.mp3"},
-    {nom: "Holy Roller", path: "./Albums/Eternal Blue/Holy Roller.mp3"},
-    {nom: "Eternal Blue", path: "./Albums/Eternal Blue/Eternal Blue.mp3"},
-    {nom: "We Live In A Strange Wolrd", path: "./Albums/Eternal Blue/We Live In A Strange World.mp3"},
-    {nom: "Halcyon", path: "./Albums/Eternal Blue/Halcyon.mp3"},
-    {nom: "Circle With Me", path: "./Albums/Eternal Blue/Circle With Me.mp3"},
-    {nom: "Constance", path: "./Albums/Eternal Blue/Constance.mp3"},
-  ]
   const AlbumData = {
     name: "Eternal Blue",
     artist: "Spiritbox",
-    jacket: "./Jackets/eternalBlue.jpg",
-    disc: "./Discs/eternalBlue.jpg",
-    spotify: "https://open.spotify.com/intl-fr/artist/4MzJMcHQBl9SIYSjwWn8QW",
+    jacketPath: "./Jackets/eternalBlue.jpg",
+    discPath: "./Discs/eternalBlue.jpg",
+    spotifyLink: "https://open.spotify.com/intl-fr/artist/4MzJMcHQBl9SIYSjwWn8QW",
+    tracklist: [
+      {nom: "Sun Killer", path: "./Albums/Eternal Blue/Sun Killer.mp3"},
+      {nom: "Hurt You", path: "./Albums/Eternal Blue/Hurt You.mp3"},
+      {nom: "Yellowjacket", path: "./Albums/Eternal Blue/Yellowjacket (feat. Sam Carter).mp3", ft: "Ft. Sam Carter"},
+      {nom: "The Summit", path: "./Albums/Eternal Blue/The Summit.mp3"},
+      {nom: "Secret Garden", path: "./Albums/Eternal Blue/Secret Garden.mp3"},
+      {nom: "Silk In The Strings", path: "./Albums/Eternal Blue/Silk In The Strings.mp3"},
+      {nom: "Holy Roller", path: "./Albums/Eternal Blue/Holy Roller.mp3"},
+      {nom: "Eternal Blue", path: "./Albums/Eternal Blue/Eternal Blue.mp3"},
+      {nom: "We Live In A Strange Wolrd", path: "./Albums/Eternal Blue/We Live In A Strange World.mp3"},
+      {nom: "Halcyon", path: "./Albums/Eternal Blue/Halcyon.mp3"},
+      {nom: "Circle With Me", path: "./Albums/Eternal Blue/Circle With Me.mp3"},
+      {nom: "Constance", path: "./Albums/Eternal Blue/Constance.mp3"},
+    ]
   }
+  // const AlbumDataa = {
+  //   "name": "The Way It Ends",
+  //   "artist": "Currents",
+  //   "jacketPath": "./Jackets/TheWayItEnds.jpg",
+  //   "discPath": "./Discs/TheWayItEnds.jpg",
+  //   "spotifyLink": "https://open.spotify.com/intl-fr/artist/4MzJMcHQBl9SIYSjwWn8QW",
+  //   "tracklist": [
+  //     {"nom": "Never There", "path": "./Albums/The Way It Ends/Never There.mp3"},
+  //     {"nom": "A Flag to Wave", "path": "./Albums/The Way It Ends/A Flag to Wave.mp3"},
+  //     {"nom": "Poverty of Self", "path": "./Albums/The Way It Ends/Poverty of Self.mp3"},
+  //     {"nom": "Monsters", "path": "./Albums/The Way It Ends/Monsters.mp3"},
+  //     {"nom": "Kill the Ache", "path": "./Albums/The Way It Ends/Kill the Ache.mp3"},
+  //     {"nom": "Let Me Leave", "path": "./Albums/The Way It Ends/Let Me Leave.mp3"},
+  //     {"nom": "Origin", "path": "./Albums/The Way It Ends/Origin.mp3"},
+  //     {"nom": "Split", "path": "./Albums/The Way It Ends/Split.mp3"},
+  //     {"nom": "Second Skin", "path": "./Albums/The Way It Ends/Second Skin.mp3"},
+  //     {"nom": "How I Fall Apart", "path": "./Albums/The Way It Ends/How I Fall Apart.mp3"},
+  //     {"nom": "Better Days", "path": "./Albums/The Way It Ends/Better Days.mp3"},
+  //   ]
+  // }
 
   // Functions to change the song
   const GoToPrevious = ()=> {
@@ -50,13 +70,13 @@ const Player = () => {
     }
   }
   const GoToNext = ()=> {
-    if (song < Album.length-1){
+    if (song < AlbumData.tracklist.length-1){
       PlayPause(false)
       setSong(song+1)
       setTimeout(()=>{
         PlayPause(true)
       },100)
-    } else if (song === Album.length-1) {
+    } else if (song === AlbumData.tracklist.length-1) {
       setSong(0)
       disc.current.style.animationPlayState = 'paused';
       setIsTurning(!isTurning)
@@ -133,12 +153,12 @@ const Player = () => {
     <div id="Player">
       <div id="Jacket">
         <div id="Naming">
-          <audio onLoadedMetadata={onLoadedMetaData} ref={audio} src={Album[song].path} preload="metadata" ></audio>
+          <audio onLoadedMetadata={onLoadedMetaData} ref={audio} src={AlbumData.tracklist[song].path} preload="metadata" ></audio>
           <h2>{AlbumData.name}</h2>
           <p>{AlbumData.artist}</p>
         </div>
         <div id="Links">
-          <Link to={AlbumData.spotify} target="_blank" >
+          <Link to={AlbumData.spotifyLink} target="_blank" >
             <svg
               width="30"
               height="30"
@@ -169,7 +189,7 @@ const Player = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <p>About Spiritbox</p>
+            <p>About {AlbumData.artist}</p>
           </Link>
           <Link to={"/"}>
             <svg
@@ -188,10 +208,10 @@ const Player = () => {
           </Link>
         </div>
         <div className="filter"></div>
-        <img id="Pic" src={AlbumData.jacket} alt="Jacket" />
+        <img id="Pic" src={AlbumData.jacketPath} alt="Jacket" />
         <div id="disc" ref={disc}>
           <img id="vinyl" src="./Photos/Disc.png" alt="" />
-          <img id="Dcenter" src={AlbumData.disc} alt="" />
+          <img id="Dcenter" src={AlbumData.discPath} alt="" />
         </div>
         <div id="play" onClick={TurningDisc}>
           <svg
@@ -226,10 +246,10 @@ const Player = () => {
         </div>
         <div id="card">
           <div id="song">
-            <p>{Album[song].nom}</p>
+            <p>{AlbumData.tracklist[song].nom}</p>
           </div>
           <div id="ft">
-            <p>{Album[song].ft}</p>
+            <p>{AlbumData.tracklist[song].ft}</p>
           </div>
           <div id="progressbar">
             <p>{CalculateTime(currentTime)}</p>
