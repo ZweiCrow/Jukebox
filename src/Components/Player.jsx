@@ -25,27 +25,47 @@ const Player = () => {
   const [queryParameters] = useSearchParams()
   const AlbumName = queryParameters.get("name")
 
-  // const AlbumData = {
-  //   name: "Eternal Blue",
-  //   artist: "Spiritbox",
-  //   jacketPath: "./Jackets/eternalBlue.jpg",
-  //   discPath: "./Discs/eternalBlue.jpg",
-  //   spotifyLink: "https://open.spotify.com/intl-fr/artist/4MzJMcHQBl9SIYSjwWn8QW",
-  //   tracklist: [
-  //     {nom: "Sun Killer", path: "./Albums/Eternal Blue/Sun Killer.mp3"},
-  //     {nom: "Hurt You", path: "./Albums/Eternal Blue/Hurt You.mp3"},
-  //     {nom: "Yellowjacket", path: "./Albums/Eternal Blue/Yellowjacket (feat. Sam Carter).mp3", ft: "Ft. Sam Carter"},
-  //     {nom: "The Summit", path: "./Albums/Eternal Blue/The Summit.mp3"},
-  //     {nom: "Secret Garden", path: "./Albums/Eternal Blue/Secret Garden.mp3"},
-  //     {nom: "Silk In The Strings", path: "./Albums/Eternal Blue/Silk In The Strings.mp3"},
-  //     {nom: "Holy Roller", path: "./Albums/Eternal Blue/Holy Roller.mp3"},
-  //     {nom: "Eternal Blue", path: "./Albums/Eternal Blue/Eternal Blue.mp3"},
-  //     {nom: "We Live In A Strange Wolrd", path: "./Albums/Eternal Blue/We Live In A Strange World.mp3"},
-  //     {nom: "Halcyon", path: "./Albums/Eternal Blue/Halcyon.mp3"},
-  //     {nom: "Circle With Me", path: "./Albums/Eternal Blue/Circle With Me.mp3"},
-  //     {nom: "Constance", path: "./Albums/Eternal Blue/Constance.mp3"},
-  //   ]
-  // }
+  const AlbumDataaa = {
+    "name": "EternalBlue",
+    "artist": "Spiritbox",
+    "jacketPath": "./Jackets/eternalBlue.jpg",
+    "discPath": "./Discs/eternalBlue.jpg",
+    "spotifyLink": "link",
+    "tracklist": [
+      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3", ft: "Ft. Sam Carter"},
+      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+      {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
+    ]
+  }
+  const AlbumDataaaa = {
+    "name": "Holy Hell",
+    "artist": "Architects",
+    "jacketPath": "./Jackets/HolyHell.jpg",
+    "discPath": "./Discs/HolyHell.jpg",
+    "spotifyLink": "https://open.spotify.com/intl-fr/artist/3ZztVuWxHzNpl0THurTFCv",
+    "tracklist": [
+      {"nom": "Death Is Not Defeat", "path": "./Albums/Holy Hell/Death Is Not Defeat.mp3"},
+      {"nom": "Hereafter", "path": "./Albums/Holy Hell/Hereafter.mp3"},
+      {"nom": "Mortal After All", "path": "./Albums/Holy Hell/Mortal After All.mp3"},
+      {"nom": "Holy Hell", "path": "./Albums/Holy Hell/Holy Hell.mp3"},
+      {"nom": "Damnation", "path": "./Albums/Holy Hell/Damnation.mp3"},
+      {"nom": "Royal Beggars", "path": "./Albums/Holy Hell/Royal Beggars.mp3"},
+      {"nom": "Modern Misery", "path": "./Albums/Holy Hell/Modern Misery.mp3"},
+      {"nom": "Dying To Heal", "path": "./Albums/Holy Hell/Dying To Heal.mp3"},
+      {"nom": "The Seventh Circle", "path": "./Albums/Holy Hell/The Seventh Circle.mp3"},
+      {"nom": "Doomsday", "path": "./Albums/Holy Hell/Doomsday.mp3"},
+      {"nom": "A Wasted Hymn", "path": "./Albums/Holy Hell/A Wasted Hymn.mp3"}
+    ]
+  }
 
   // Functions to change the song
   const GoToPrevious = ()=> {
