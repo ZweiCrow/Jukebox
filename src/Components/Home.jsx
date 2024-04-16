@@ -1,29 +1,59 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import "../Utils/Sass/home.scss"
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { URL } from '../Urls';
 
 const Home = () => {
-  return (
+  const [albumsList,setAlbumsList] = useState([])
+  const [isLoaded,setIsLoaded] = useState(false)
+  const fadin = useRef()
+  let counter = 0;
+
+  useEffect(()=>{
+    const fetchList = async ()=>{
+      try {
+        const {data} = await axios.get(URL.albumsList)
+        setAlbumsList(data)
+        setIsLoaded(true)
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    fetchList();
+  },[])
+
+  if (!isLoaded) {
+    return  <div id='Loading'><p>Loading...</p></div>;
+  }
+  if (isLoaded) {
+    setTimeout(()=>{
+      fadin.current.classList.add("hide")
+    },100)
+    setTimeout(()=>{
+      fadin.current.classList.add("fadeOut")
+    },2000)
+  }
+
+  return (<>
+    <div id='Loaded' ref={fadin} className='fading'></div>
     <div id="Home">
       <div>
         <h2>Albums</h2>
         <ul>
-          <Link to={"/Play"}>
-            <img src="./Jackets/EternalBlue.jpg" alt="" />
-            <p>Eternal Blue</p>
-          </Link>
-          <Link to={"/"}>
-            <img src="./Jackets/HolyHell.jpg" alt="" />
-            <p>Holy Hell</p>
-          </Link>
-          <Link to={"/"}>
-            <img src="./Jackets/TheWayItEnds.jpg" alt="" />
-            <p>The Way It Ends</p>
-          </Link>
-          <Link to={"/"}>
-            <img src="./Jackets/Renaissance.jpg" alt="" />
-            <p>Renaissance</p>
-          </Link>
+          {albumsList.map((album)=>{
+            counter++;
+            if (counter <= 4) {
+              return(
+                <Link to={`/Play?name=${album.name}`} key={album._id}>
+                  <img src={album.jacketPath} alt="" />
+                  <p>{album.name}</p>
+                </Link>
+              )
+            }else{
+              return(<></>)
+            }
+          })}
           <Link to={"/Albums"} id='More'>
             <p>More</p>
           </Link>
@@ -58,7 +88,7 @@ const Home = () => {
         <ul></ul>
       </div>
     </div>
-  );
+  </>);
 };
 
 export default Home;

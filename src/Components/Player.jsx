@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import "../Utils/Sass/player.scss"
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import axios from 'axios';
+import { URL } from '../Urls';
 
 const Player = () => {
   // States
@@ -8,54 +10,40 @@ const Player = () => {
   const [song, setSong] = useState(0) 
   const [duration, setDuration] = useState(0) 
   const [currentTime, setCurrentTime] = useState(0) 
+  const [AlbumData, setAlbumData] = useState({}) 
+  const [isLoaded,setIsLoaded] = useState(false)
 
   // References
   const disc = useRef()
   const audio = useRef()
+  const fadin = useRef()
   const playIcon = useRef()
   const pauseIcon = useRef()
   const progressBar = useRef()
   const animationRef = useRef() // animation de la barre de progres
 
-  const AlbumData = {
-    name: "Eternal Blue",
-    artist: "Spiritbox",
-    jacketPath: "./Jackets/eternalBlue.jpg",
-    discPath: "./Discs/eternalBlue.jpg",
-    spotifyLink: "https://open.spotify.com/intl-fr/artist/4MzJMcHQBl9SIYSjwWn8QW",
-    tracklist: [
-      {nom: "Sun Killer", path: "./Albums/Eternal Blue/Sun Killer.mp3"},
-      {nom: "Hurt You", path: "./Albums/Eternal Blue/Hurt You.mp3"},
-      {nom: "Yellowjacket", path: "./Albums/Eternal Blue/Yellowjacket (feat. Sam Carter).mp3", ft: "Ft. Sam Carter"},
-      {nom: "The Summit", path: "./Albums/Eternal Blue/The Summit.mp3"},
-      {nom: "Secret Garden", path: "./Albums/Eternal Blue/Secret Garden.mp3"},
-      {nom: "Silk In The Strings", path: "./Albums/Eternal Blue/Silk In The Strings.mp3"},
-      {nom: "Holy Roller", path: "./Albums/Eternal Blue/Holy Roller.mp3"},
-      {nom: "Eternal Blue", path: "./Albums/Eternal Blue/Eternal Blue.mp3"},
-      {nom: "We Live In A Strange Wolrd", path: "./Albums/Eternal Blue/We Live In A Strange World.mp3"},
-      {nom: "Halcyon", path: "./Albums/Eternal Blue/Halcyon.mp3"},
-      {nom: "Circle With Me", path: "./Albums/Eternal Blue/Circle With Me.mp3"},
-      {nom: "Constance", path: "./Albums/Eternal Blue/Constance.mp3"},
-    ]
-  }
-  // const AlbumDataa = {
-  //   "name": "The Way It Ends",
-  //   "artist": "Currents",
-  //   "jacketPath": "./Jackets/TheWayItEnds.jpg",
-  //   "discPath": "./Discs/TheWayItEnds.jpg",
-  //   "spotifyLink": "https://open.spotify.com/intl-fr/artist/4MzJMcHQBl9SIYSjwWn8QW",
-  //   "tracklist": [
-  //     {"nom": "Never There", "path": "./Albums/The Way It Ends/Never There.mp3"},
-  //     {"nom": "A Flag to Wave", "path": "./Albums/The Way It Ends/A Flag to Wave.mp3"},
-  //     {"nom": "Poverty of Self", "path": "./Albums/The Way It Ends/Poverty of Self.mp3"},
-  //     {"nom": "Monsters", "path": "./Albums/The Way It Ends/Monsters.mp3"},
-  //     {"nom": "Kill the Ache", "path": "./Albums/The Way It Ends/Kill the Ache.mp3"},
-  //     {"nom": "Let Me Leave", "path": "./Albums/The Way It Ends/Let Me Leave.mp3"},
-  //     {"nom": "Origin", "path": "./Albums/The Way It Ends/Origin.mp3"},
-  //     {"nom": "Split", "path": "./Albums/The Way It Ends/Split.mp3"},
-  //     {"nom": "Second Skin", "path": "./Albums/The Way It Ends/Second Skin.mp3"},
-  //     {"nom": "How I Fall Apart", "path": "./Albums/The Way It Ends/How I Fall Apart.mp3"},
-  //     {"nom": "Better Days", "path": "./Albums/The Way It Ends/Better Days.mp3"},
+  const [queryParameters] = useSearchParams()
+  const AlbumName = queryParameters.get("name")
+
+  // const AlbumData = {
+  //   name: "Eternal Blue",
+  //   artist: "Spiritbox",
+  //   jacketPath: "./Jackets/eternalBlue.jpg",
+  //   discPath: "./Discs/eternalBlue.jpg",
+  //   spotifyLink: "https://open.spotify.com/intl-fr/artist/4MzJMcHQBl9SIYSjwWn8QW",
+  //   tracklist: [
+  //     {nom: "Sun Killer", path: "./Albums/Eternal Blue/Sun Killer.mp3"},
+  //     {nom: "Hurt You", path: "./Albums/Eternal Blue/Hurt You.mp3"},
+  //     {nom: "Yellowjacket", path: "./Albums/Eternal Blue/Yellowjacket (feat. Sam Carter).mp3", ft: "Ft. Sam Carter"},
+  //     {nom: "The Summit", path: "./Albums/Eternal Blue/The Summit.mp3"},
+  //     {nom: "Secret Garden", path: "./Albums/Eternal Blue/Secret Garden.mp3"},
+  //     {nom: "Silk In The Strings", path: "./Albums/Eternal Blue/Silk In The Strings.mp3"},
+  //     {nom: "Holy Roller", path: "./Albums/Eternal Blue/Holy Roller.mp3"},
+  //     {nom: "Eternal Blue", path: "./Albums/Eternal Blue/Eternal Blue.mp3"},
+  //     {nom: "We Live In A Strange Wolrd", path: "./Albums/Eternal Blue/We Live In A Strange World.mp3"},
+  //     {nom: "Halcyon", path: "./Albums/Eternal Blue/Halcyon.mp3"},
+  //     {nom: "Circle With Me", path: "./Albums/Eternal Blue/Circle With Me.mp3"},
+  //     {nom: "Constance", path: "./Albums/Eternal Blue/Constance.mp3"},
   //   ]
   // }
 
@@ -148,8 +136,33 @@ const Player = () => {
     progressBar.current.max = seconds
   }
 
+  useEffect(()=>{
+    const fetchList = async ()=>{
+      try {
+        const {data} = await axios.get(`${URL.album}${AlbumName}`)
+        setAlbumData(data)
+        setIsLoaded(true)
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    fetchList();
+  },[])
 
-  return (
+  if (!isLoaded) {
+    return  <div id='Loading'><p>Loading...</p></div>;
+  }
+  if (isLoaded) {
+    setTimeout(()=>{
+      fadin.current.classList.add("hide")
+    },100)
+    setTimeout(()=>{
+      fadin.current.classList.add("fadeOut")
+    },2000)
+  }
+
+  return (<>
+    <div id='Loaded' ref={fadin} className='fading'></div>
     <div id="Player">
       <div id="Jacket">
         <div id="Naming">
@@ -294,6 +307,7 @@ const Player = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
