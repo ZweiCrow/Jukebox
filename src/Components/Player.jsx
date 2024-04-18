@@ -23,11 +23,11 @@ const Player = () => {
   const progressBar = useRef()
   const animationRef = useRef() // animation de la barre de progres
 
-  // const AlbumDataaa = {
-  //   "name": "EternalBlue",
-  //   "artist": "Spiritbox",
-  //   "jacketPath": "./Jackets/eternalBlue.jpg",
-  //   "discPath": "./Discs/eternalBlue.jpg",
+  // const AlbumDataa = {
+  //   "name": "Bad Omens",
+  //   "artist": "Bad Omens",
+  //   "jacketPath": "./Jackets/BadOmens.jpg",
+  //   "discPath": "./Discs/BadOmens.jpg",
   //   "spotifyLink": "link",
   //   "tracklist": [
   //     {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
@@ -44,6 +44,9 @@ const Player = () => {
   //     {"nom": "song", "path": "./Albums/Eternalblue/song.mp3"},
   //   ]
   // }
+  
+  
+
 
 
   const [queryParameters] = useSearchParams()
