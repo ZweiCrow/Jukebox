@@ -47,6 +47,7 @@ const Player = () => {
 
   const [queryParameters] = useSearchParams()
   const AlbumName = queryParameters.get("name")
+  const Index = queryParameters.get("index")
   const navigate = useNavigate();
 
   // Fonctions
@@ -56,7 +57,7 @@ const Player = () => {
     navigate('/');
   }
   const GoBack = () => {
-    navigate('/Albums');
+    navigate(-1);
   }
 
   // Fonction to play or pause the audio
@@ -184,6 +185,9 @@ const Player = () => {
       try {
         const {data} = await axios.get(`${URL.album}${AlbumName}`)
         setAlbumData(data)
+        if (Index !== null) {
+          setSong(Index)
+        }
         setIsLoaded(true)
       } catch (error) {
         console.error(error.message);
@@ -191,6 +195,8 @@ const Player = () => {
     };
     fetchList();
   },[])
+
+  
 
   if (!isLoaded) {
     return  <div id='Loading'><p>Loading...</p></div>;

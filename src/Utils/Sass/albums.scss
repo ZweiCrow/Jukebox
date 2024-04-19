@@ -3,18 +3,18 @@
 #AlbumsPage { width: 100%; height: fit-content; display: flex; flex-direction: column; align-items: center;
               h1  { font-family: SpotBold; font-size: 50px; color: var(--light); filter: drop-shadow(0 0 1px var(--light)); margin-top: 75px;}
               #Searchbar  { width: 80%; height: 75px; margin: 50px 0; @include centerRow;
-                            .pagesNav { width: 10%; height: 70%; background: #303030; margin: 0 20px; border-radius: 50px; border: 2px solid #5A5A5A; @include centerRow;
+                            .pagesNav { width: 10%; height: 70%; background: var(--dark2); margin: 0 20px; border-radius: 50px; border: 2px solid var(--dark3); @include centerRow;
                                         svg     { height: 70%;}
-                                        &:hover { cursor: pointer; background: #5A5A5A; border: 2px solid var(--light);
+                                        &:hover { cursor: pointer; background: var(--dark3); border: 2px solid var(--light);
                                                   svg { path  {fill: var(--light);}  }
                                                 }
                                       }
-                            input     { width: 50%; height: 60%; border: 2px solid #5A5A5A; border-radius: 50px; background: #303030; color: #5A5A5A; font-family: Spot; font-size: 26px; padding: 5px 25px;
-                                        &:hover { border: 2px solid var(--light); background: #5A5A5A; color: var(--light);}
-                                        &:focus { outline: none; border: 2px solid var(--light); background: #5A5A5A; color: var(--light);}
+                            input     { width: 50%; height: 60%; border: 2px solid var(--dark3); border-radius: 50px; background: var(--dark2); color: var(--dark3); font-family: Spot; font-size: 26px; padding: 5px 25px;
+                                        &:hover { border: 2px solid var(--light); background: var(--dark3); color: var(--light);}
+                                        &:focus { outline: none; border: 2px solid var(--light); background: var(--dark3); color: var(--light);}
                                       }
                           }
-              #AlbumsPanel  { width: 80%; height: 60vh; background: #303030; border-radius: 15px; margin-bottom: 50px; @include centerRow;
+              #AlbumsPanel  { width: 80%; height: 60vh; background: var(--dark2); border-radius: 15px; margin-bottom: 50px; @include centerRow;
                               ul  { width: 95%; height: 90%; display: flex; flex-wrap: wrap; justify-content: center;
                                     a { width: 20%; height: 45%; margin: 5px 20px; display: flex; flex-direction: column; align-items: center;
                                         img { width: 70%; aspect-ratio: 1/1; border-radius: 10px; margin-top: 10px;}

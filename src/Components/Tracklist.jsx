@@ -8,6 +8,7 @@ const Tracklist = () => {
   const [queryParameters] = useSearchParams()
   const AlbumName = queryParameters.get("name")
   const navigate = useNavigate();
+  let counter = 0;
 
   // States
   const [AlbumData, setAlbumData] = useState({})
@@ -21,10 +22,8 @@ const Tracklist = () => {
     navigate('/');
   }
   const GoBack = () => {
-    navigate(`/Play?name=${AlbumData.name}`);
+    navigate(-1);
   }
-
-
 
   useEffect(()=>{
     const fetchList = async ()=>{
@@ -68,11 +67,28 @@ const Tracklist = () => {
     <div id='Tracklist'>
       <div id='TrackTop'>
         <img src={AlbumData.jacketPath} alt="Album Jacket" />
-        <div></div>
+        <div id='trackF1'></div>
+        <div id='trackF2'></div>
         <h1>{AlbumData.name}</h1>
         <p>by <Link to={`/`}>{AlbumData.artist}</Link></p>
       </div>
-      <div id='TrackBottom'></div>
+      <div id='TrackBottom'>
+        <div id='tableHeader'>
+          <div className='TrackOrder'><p>#</p></div>
+          <div className='TrackTitle'><p>Title</p></div>
+        </div>
+        <ul>
+          {AlbumData.tracklist.map((song)=>{
+            counter++;
+            return(
+              <Link to={`/Play?name=${AlbumName}&index=${counter-1}`} key={song.nom}>
+                <div className='TrackOrder TrackOrderBorder'><p>{counter}</p></div>
+                <div className='TrackTitle'><p>{song.nom}</p></div>
+              </Link>
+            )
+          })}
+        </ul>
+      </div>
     </div>
   </>);
 };

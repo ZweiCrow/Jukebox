@@ -36,7 +36,7 @@ const Albums = () => {
     navigate('/');
   }
   const GoBack = () => {
-    navigate('/');
+    navigate(-1);
   }
 
   useEffect(()=>{
