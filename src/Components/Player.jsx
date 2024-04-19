@@ -259,7 +259,7 @@ const Player = () => {
             </svg>
             <p>About {AlbumData.artist}</p>
           </Link>
-          <Link to={"/"}>
+          <Link to={`/Tracklist?name=${AlbumData.name}`}>
             <svg
               width="30"
               height="35"
