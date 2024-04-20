@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import "../Utils/Sass/albums.scss"
+import "../Utils/Sass/searches.scss"
 import axios from 'axios';
 import { URL } from '../Urls';
 import { Link, useNavigate } from 'react-router-dom';
@@ -78,7 +78,7 @@ const Albums = () => {
       </div>
     </div>
     <div id='Loaded' ref={fadin} className='fading'></div>
-    <div id="AlbumsPage">
+    <div id="SearchPage">
       <h1>Albums</h1>
       <div id="Searchbar">
         <div className="pagesNav" onClick={Previous}>
@@ -111,7 +111,7 @@ const Albums = () => {
           </svg>
         </div>
       </div>
-      <div id="AlbumsPanel">
+      <div id="SearchPanel">
         <ul>
           {albumsList.map((album)=>{
             counter++

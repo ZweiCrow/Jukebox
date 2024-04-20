@@ -42,12 +42,13 @@
 @media screen and (max-width: 1200px) {
   #Home {
           div { height: fit-content; display: flex; flex-direction: column; align-items: center;
+                h2  { margin: 20px 0;}
                 ul  { width: 95%; height: fit-content; display: flex; align-items: center; flex-direction: column;  margin: 30px auto 0 !important; 
                   a { width: 90%; height: 70px; @include centerRow; margin: 10px 0; justify-content: flex-start; align-items: center;
                       img { height: 100%; width: auto; border-radius: 15px; filter: drop-shadow(0 0 4px var(--dark1)); margin-right: 20px;}
                       p   { font-size: 2.5vw; margin: 0;}
                     }
-                  #More { width: 200px; height: 50px; margin-top: 20px;
+                  #More { width: 200px; height: 50px; margin: 20px 0; 
                     p { font-family: SpotBold; font-size: 20px; color: var(--light); margin: 0;}
                   }
                 }
