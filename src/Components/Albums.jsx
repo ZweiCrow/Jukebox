@@ -123,6 +123,7 @@ const Albums = () => {
                 </Link>
               )
             } else {
+              counter--
               return(<></>)
             }
           })}
