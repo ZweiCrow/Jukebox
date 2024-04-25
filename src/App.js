@@ -9,6 +9,7 @@ import Artists from "./Components/Artists";
 function App() {
   return (
     <Routes>
+      <Route index element={Home}/>
       <Route path="/" Component={Home}/>
       <Route path="/Albums" Component={Albums}/>
       <Route path="/Artists" Component={Artists}/>
