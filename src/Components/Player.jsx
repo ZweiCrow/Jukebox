@@ -247,7 +247,7 @@ const Player = () => {
             </svg>
             <p>Listen on Spotify</p>
           </Link>
-          <Link to={"/"}>
+          <Link to={`/About?name=${AlbumData.artist}`}>
             <svg
               width="32"
               height="34"

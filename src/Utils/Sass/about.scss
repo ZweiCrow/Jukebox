@@ -1,0 +1,32 @@
+@import "./constantes.scss";
+
+.filter { opacity: .5;}
+
+#AboutPage  { width: 100%; height: 100vh;
+              #AboutUp  { width: 100%; height: 500px; background: tomato; position: relative; overflow: hidden; z-index: 10;
+                          h1  { position: absolute; z-index: 90; top: 50%; left: 10%; transform: translateY(-50%); font-family: SpotBold; font-size: 7vw; color: var(--light); filter: drop-shadow(0 0 1px var(--light)); display: flex;
+                                a { height: 20%; width: 50px; margin-left: 40px;
+                                    svg { width: 100%; height: auto;
+                                          path  {fill: var(--light);}
+                                        }
+                                    &:hover {
+                                      svg {
+                                        path  {fill: rgb(47, 255, 113);}
+                                      }
+                                    }
+                                  }
+                              }
+                          div { position: absolute; z-index: 50; top: 0; left: 0; }
+                          img { position: absolute; z-index: 10; top: 50%; left: 0; width: 100%; transform: translateY(-50%);}
+                        }
+              #AboutDown  { width: 100%; height: fit-content; position: relative; margin-top: -50px; z-index: 20; border-radius: 30px 30px 0 0; background: var(--dark1); padding: 50px 0;
+                            h2  { font-family: SpotBold; font-size: 4vw; color: var(--light); margin-left: 5%;}
+                            ul  { width: 90%; height: 600px; background: var(--dark2); margin: 50px auto; border-radius: 15px; display: flex; flex-wrap: wrap; justify-content: center;
+                                  a { width: 20%; height: 25%; margin: 25px 0px; display: flex; flex-direction: column; align-items: center;
+                                      img { width: 70%; aspect-ratio: 1/1; border-radius: 10px; margin-top: 10px;}
+                                      p   { font-family: Spot; font-size: 18px; color: var(--light); margin-top: 15px; text-align: center;}
+                                      &:hover {  p  { filter: drop-shadow(0 0 4px var(--light));}  }
+                                    }
+                                }
+                          }
+            }

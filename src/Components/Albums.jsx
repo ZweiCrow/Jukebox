@@ -13,6 +13,8 @@ const Albums = () => {
   const [isLoaded,setIsLoaded] = useState(false)
   const [pageMin,setPageMin] = useState(1)
   const [pageMax,setPageMax] = useState(8)
+  const [listStart,setListStart] = useState(false)
+  const [listEnd,setListEnd] = useState(false)
 
   // Refs
   const fadin = useRef()
@@ -21,12 +23,10 @@ const Albums = () => {
 
   // Functions
   const Previous = () => {
-    console.log("previous");
     setPageMax(pageMax-8)
     setPageMin(pageMin-8)
   }
   const Next = () => {
-    console.log("next");
     setPageMax(pageMax+8)
     setPageMin(pageMin+8)
   }
@@ -116,6 +116,12 @@ const Albums = () => {
           {albumsList.map((album)=>{
             counter++
             if(album.name.toLowerCase().includes(Search.toLowerCase()) && counter <= pageMax && counter >= pageMin){
+              // if (album === albumsList[albumsList.length-1]) {
+              //   console.log("Last Page");
+              // } 
+              // if(album === albumsList[0]) {
+              //   console.log("First Page");
+              // } 
               return(
                 <Link to={`/Play?name=${album.name}`} key={album._id}>
                   <img src={album.jacketPath} alt="" />
@@ -123,8 +129,10 @@ const Albums = () => {
                 </Link>
               )
             } else {
-              counter--
-              return(<></>)
+              if (Search !== "") {
+                counter--
+              }
+              return(null)
             }
           })}
         </ul>

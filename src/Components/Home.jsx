@@ -6,21 +6,31 @@ import { URL } from '../Urls';
 
 const Home = () => {
   const [albumsList,setAlbumsList] = useState([])
+  const [artistsList,setArtistsList] = useState([])
   const [isLoaded,setIsLoaded] = useState(false)
   const fadin = useRef()
   let counter = 0;
 
   useEffect(()=>{
-    const fetchList = async ()=>{
+    const fetchAlbumsList = async ()=>{
       try {
         const {data} = await axios.get(URL.albumsList)
         setAlbumsList(data)
+        fetchArtistList()
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    const fetchArtistList = async ()=>{
+      try {
+        const {data} = await axios.get(URL.artistsList)
+        setArtistsList(data)
         setIsLoaded(true)
       } catch (error) {
         console.error(error.message);
       }
     };
-    fetchList();
+    fetchAlbumsList();
   },[])
 
   if (!isLoaded) {
@@ -62,22 +72,14 @@ const Home = () => {
       <div>
         <h2>Artists</h2>
         <ul>
-          <Link to={"/"}>
-            <img src="./Artists/Spiritbox.jpg" alt="" />
-            <p>Spiritbox</p>
-          </Link>
-          <Link to={"/"}>
-            <img src="./Artists/Architects.jpg" alt="" />
-            <p>Architects</p>
-          </Link>
-          <Link to={"/"}>
-            <img src="./Artists/Currents.jpg" alt="" />
-            <p>Currents</p>
-          </Link>
-          <Link to={"/"}>
-            <img src="./Artists/Polyphia.jpg" alt="" />
-            <p>Polyphia</p>
-          </Link>
+          {artistsList.map((artist)=>{
+            return(
+              <Link to={`/About?name=${artist.name}`}>
+                <img src={artist.photoPath} alt="pic" />
+                <p>{artist.name}</p>
+              </Link>
+            )
+          })}
           <Link to={"/Artists"} id='More'>
             <p>More</p>
           </Link>
