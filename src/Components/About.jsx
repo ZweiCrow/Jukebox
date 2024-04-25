@@ -18,10 +18,15 @@ const About = () => {
   const ArtistName = queryParameters.get("name")
   const navigate = useNavigate();
   
-  const Artistz = {
+  const Artistzc = {
     "name": "Currents",
     "photoPath": "/Artists/Currents.jpg",
-    "spotifyLink": "https://open.spotify.com/intl-fr/artist/5pqvAI85RMxL9K0xHvSwGu",
+    "spotifyLink": "aaaaa",
+  }
+  const Artistz = {
+    "name": "Nick Johnston",
+    "photoPath": "/Artists/NickJohnston.jpg",
+    "spotifyLink": "https://open.spotify.com/intl-fr/artist/3d5yBCe5SBKkJnWvl9GB7r"
   }
 
   //  Functions

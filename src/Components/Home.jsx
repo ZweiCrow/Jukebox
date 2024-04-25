@@ -10,6 +10,7 @@ const Home = () => {
   const [isLoaded,setIsLoaded] = useState(false)
   const fadin = useRef()
   let counter = 0;
+  let counter2 = 0;
 
   useEffect(()=>{
     const fetchAlbumsList = async ()=>{
@@ -73,12 +74,17 @@ const Home = () => {
         <h2>Artists</h2>
         <ul>
           {artistsList.map((artist)=>{
+            counter2++;
+            if (counter2 <= 4) {
             return(
               <Link to={`/About?name=${artist.name}`}>
                 <img src={artist.photoPath} alt="pic" />
                 <p>{artist.name}</p>
               </Link>
             )
+          }else{
+            return(<></>)
+          }
           })}
           <Link to={"/Artists"} id='More'>
             <p>More</p>

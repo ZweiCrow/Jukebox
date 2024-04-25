@@ -4,13 +4,14 @@ import Player from "./Components/Player";
 import Albums from "./Components/Albums";
 import Tracklist from "./Components/Tracklist";
 import About from "./Components/About";
+import Artists from "./Components/Artists";
 
 function App() {
   return (
     <Routes>
       <Route path="/" Component={Home}/>
       <Route path="/Albums" Component={Albums}/>
-      <Route path="/Artists" Component={Home}/>
+      <Route path="/Artists" Component={Artists}/>
       <Route path="/SoundTracks" Component={Home}/>
       <Route path="/Play" Component={Player}/>
       <Route path="/About" Component={About}/>
