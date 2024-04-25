@@ -79,7 +79,7 @@ const Artists = () => {
     </div>
     <div id='Loaded' ref={fadin} className='fading'></div>
     <div id="SearchPage">
-      <h1>Albums</h1>
+      <h1>Artists</h1>
       <div id="Searchbar">
         <div className="pagesNav" onClick={Previous}>
           <svg
